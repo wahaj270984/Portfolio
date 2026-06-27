@@ -20,4 +20,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  // 3D asset pipeline — treat models / HDRIs / compressed textures as assets
+  // so they get hashed + emitted and can be imported with `?url`.
+  assetsInclude: ['**/*.glb', '**/*.gltf', '**/*.hdr', '**/*.exr', '**/*.ktx2'],
 })
