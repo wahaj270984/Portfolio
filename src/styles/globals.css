@@ -15,7 +15,7 @@
 @theme inline {
   --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Space Grotesk', system-ui, sans-serif;
-  --font-mono: ui-monospace, Consolas, monospace;
+  --font-mono: ui-monospace, 'JetBrains Mono', Consolas, monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -31,6 +31,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-violet: var(--violet);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -41,52 +42,59 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-shine: shine 3.5s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
 }
 
+/* Electric-blue primary · cyan accent · violet secondary. Dark-first. */
 :root {
-  --radius: 0.625rem;
+  --radius: 0.75rem;
 
-  --background: #ffffff;
-  --foreground: #08060d;
+  --background: #f6f8fc;
+  --foreground: #0a0e17;
   --card: #ffffff;
-  --card-foreground: #08060d;
+  --card-foreground: #0a0e17;
   --popover: #ffffff;
-  --popover-foreground: #08060d;
-  --primary: #aa3bff;
+  --popover-foreground: #0a0e17;
+  --primary: #2563eb;
   --primary-foreground: #ffffff;
-  --secondary: #f4f3f6;
-  --secondary-foreground: #08060d;
-  --muted: #f4f3f6;
-  --muted-foreground: #6b6375;
-  --accent: #aa3bff;
+  --secondary: #eef1f8;
+  --secondary-foreground: #0a0e17;
+  --muted: #eef1f8;
+  --muted-foreground: #5b6577;
+  --accent: #0891b2;
   --accent-foreground: #ffffff;
+  --violet: #7c3aed;
   --destructive: #e5484d;
   --destructive-foreground: #ffffff;
-  --border: #e5e4e7;
-  --input: #e5e4e7;
-  --ring: #aa3bff;
+  --border: #dfe4ee;
+  --input: #dfe4ee;
+  --ring: #2563eb;
 }
 
 [data-theme='dark'] {
-  --background: #0b0b0f;
-  --foreground: #f3f4f6;
-  --card: #16171d;
-  --card-foreground: #f3f4f6;
-  --popover: #16171d;
-  --popover-foreground: #f3f4f6;
-  --primary: #c084fc;
-  --primary-foreground: #0b0b0f;
-  --secondary: #1f2028;
-  --secondary-foreground: #f3f4f6;
-  --muted: #1f2028;
-  --muted-foreground: #9ca3af;
-  --accent: #c084fc;
-  --accent-foreground: #0b0b0f;
+  --background: #05070e;
+  --foreground: #e8edf7;
+  --card: #0b0f1a;
+  --card-foreground: #e8edf7;
+  --popover: #0b0f1a;
+  --popover-foreground: #e8edf7;
+  --primary: #4d8dff;
+  --primary-foreground: #04060c;
+  --secondary: #121826;
+  --secondary-foreground: #e8edf7;
+  --muted: #121826;
+  --muted-foreground: #8a94a8;
+  --accent: #22d3ee;
+  --accent-foreground: #04060c;
+  --violet: #a855f7;
   --destructive: #ff6166;
-  --destructive-foreground: #0b0b0f;
-  --border: #2e303a;
-  --input: #2e303a;
-  --ring: #c084fc;
+  --destructive-foreground: #04060c;
+  --border: #1b2334;
+  --input: #1b2334;
+  --ring: #4d8dff;
 }
 
 @layer base {
@@ -101,6 +109,11 @@
     min-height: 100svh;
   }
 
+  html {
+    /* Lenis drives scroll; keep anchor jumps instant so it can take over. */
+    scroll-behavior: auto;
+  }
+
   body {
     font-family: var(--font-sans);
     background: var(--color-background);
@@ -109,7 +122,6 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Lenis owns scrolling; avoid native smooth-scroll conflicts. */
     overflow-x: hidden;
   }
 
@@ -120,6 +132,118 @@
     font-family: var(--font-heading);
     color: var(--color-foreground);
     text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+
+  /* Lenis: disable native smoothing, expose smooth state. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-primary) 30%, transparent);
+    color: var(--color-foreground);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reusable aesthetic utilities (glass, glow, gradient text, grain).   */
+/* ------------------------------------------------------------------ */
+@layer utilities {
+  .glass {
+    background: color-mix(in srgb, var(--color-card) 55%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 10%, transparent);
+  }
+
+  .glass-strong {
+    background: color-mix(in srgb, var(--color-card) 80%, transparent);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 12%, transparent);
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      120deg,
+      var(--color-foreground) 0%,
+      var(--color-primary) 55%,
+      var(--color-accent) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 24px color-mix(in srgb, var(--color-primary) 55%, transparent);
+  }
+
+  .ring-glow {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-primary) 40%, transparent),
+      0 0 32px -4px color-mix(in srgb, var(--color-primary) 45%, transparent);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--color-foreground) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-foreground) 6%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .mask-fade-y {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-120%) skewX(-12deg);
+  }
+  60%,
+  100% {
+    transform: translateX(220%) skewX(-12deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
@@ -129,6 +253,7 @@
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }

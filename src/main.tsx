@@ -11,6 +11,13 @@ import '@fontsource/space-grotesk/700.css'
 import '@/styles/globals.css'
 import App from '@/App.tsx'
 
+// Easter egg: a signature for anyone who opens the console.
+console.log(
+  '%c⚡ Muhammad Wahaj Khan %c\nYou found the console. Try the Konami code, or `help` in the contact terminal.',
+  'font-size:16px;font-weight:bold;color:#4d8dff',
+  'color:#8a94a8',
+)
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />

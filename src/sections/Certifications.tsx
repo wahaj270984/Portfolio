@@ -1,0 +1,54 @@
+import { BadgeCheck } from 'lucide-react'
+import { Section } from '@/components/layout/Section'
+import { SectionHeading } from '@/components/ui/section-heading'
+import { GlassPanel } from '@/components/ui/glass-panel'
+import { Reveal } from '@/components/motion/Reveal'
+import { certifications, type Certification } from '@/data/certifications'
+import { cn } from '@/lib/utils'
+
+const DOT: Record<Certification['accent'], string> = {
+  primary: 'text-primary',
+  accent: 'text-accent',
+  violet: 'text-violet',
+}
+
+export function Certifications() {
+  return (
+    <Section id="certifications" aria-label="Certifications">
+      <SectionHeading
+        index="08"
+        eyebrow="Certifications"
+        title={<>Credentials, <span className="text-gradient">verified</span></>}
+        description="Formal stamps on the skills — hover a panel for the credential ID."
+      />
+
+      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {certifications.map((cert, i) => (
+          <Reveal key={cert.id} from="up" delay={i} className="h-full">
+            <GlassPanel
+              tone="strong"
+              pad="lg"
+              className="group relative h-full overflow-hidden"
+              data-cursor="hover"
+            >
+              {/* Animated shine sweep on hover. */}
+              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+
+              <div className="flex items-start justify-between gap-3">
+                <BadgeCheck className={cn('size-7', DOT[cert.accent])} />
+                <span className="font-mono text-xs text-muted-foreground">{cert.year}</span>
+              </div>
+              <h3 className="mt-4 font-heading text-base font-semibold leading-snug">
+                {cert.title}
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground">{cert.issuer}</p>
+              <p className="mt-4 font-mono text-[11px] uppercase tracking-wider text-muted-foreground/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                ID · {cert.credentialId}
+              </p>
+            </GlassPanel>
+          </Reveal>
+        ))}
+      </div>
+    </Section>
+  )
+}

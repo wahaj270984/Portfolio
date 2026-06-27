@@ -25,10 +25,30 @@ interface Waypoint {
   look: [number, number, number]
 }
 
-const WAYPOINTS: Waypoint[] = [
-  { at: 0, pos: [0, 0, 6], look: [0, 0, 0] },
-  { at: 1, pos: [2.5, 1.2, 5], look: [0, 0, 0] },
+// One cinematic stop per section (scroll order). The rig orbits the origin at
+// varying height/angle so scrolling reads as travelling through one world.
+const STOPS: [number, number, number][] = [
+  [0, 0, 6], // hero
+  [-2.5, 0.8, 5.2], // about
+  [2.6, 1.2, 5], // skills
+  [3.2, -0.6, 4.8], // projects
+  [-3.2, -0.4, 5], // experience
+  [-1.4, 1.6, 4.4], // research
+  [2.0, 1.0, 5.4], // education
+  [0.4, -1.4, 5.6], // achievements
+  [-2.2, 0.2, 5.2], // certifications
+  [0, 0.6, 4.4], // contact
 ]
+
+const WAYPOINTS: Waypoint[] = STOPS.map((pos, i) => ({
+  at: i / (STOPS.length - 1),
+  pos,
+  look: [0, 0, 0],
+}))
+
+// Where the camera flies in *from* on first load.
+const INTRO_POS: [number, number, number] = [0, 2.4, 15]
+const INTRO_SECONDS = 2.6
 
 // Higher = snappier follow. Damping is frame-rate independent.
 const POSITION_LAMBDA = 3
@@ -70,6 +90,8 @@ export function CameraRig() {
   const targetPos = useRef(new Vector3()).current
   const targetLook = useRef(new Vector3()).current
   const dampedLook = useRef(new Vector3(0, 0, 0)).current
+  const introStart = useRef(new Vector3(...INTRO_POS)).current
+  const intro = useRef(0)
 
   // Priority 100: run after object animations so the camera reads final state.
   useAnimationTick(({ state, delta, elapsed }) => {
@@ -77,11 +99,20 @@ export function CameraRig() {
 
     samplePath(scrollProgress, targetPos, targetLook)
 
+    // Cinematic fly-in: ease the target from a pushed-back start to the path.
+    if (intro.current < 1) {
+      intro.current = Math.min(intro.current + delta / INTRO_SECONDS, 1)
+      const e = 1 - Math.pow(1 - intro.current, 3) // easeOutCubic
+      targetPos.lerpVectors(introStart, targetPos, e)
+    }
+
     if (!reducedMotion) {
-      // Idle vertical float + pointer parallax for a sense of life.
-      targetPos.y += Math.sin(elapsed * 0.6) * FLOAT_AMPLITUDE
-      targetPos.x += state.pointer.x * PARALLAX
-      targetPos.y += state.pointer.y * PARALLAX
+      // Idle vertical float + pointer parallax for a sense of life (scaled in
+      // once the intro settles so it doesn't fight the fly-in).
+      const life = intro.current
+      targetPos.y += Math.sin(elapsed * 0.6) * FLOAT_AMPLITUDE * life
+      targetPos.x += state.pointer.x * PARALLAX * life
+      targetPos.y += state.pointer.y * PARALLAX * life
     }
 
     const cam = state.camera

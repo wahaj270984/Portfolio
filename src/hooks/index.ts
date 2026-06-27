@@ -1,1 +1,6 @@
 export { useReducedMotion } from './useReducedMotion'
+export { useLenis, scrollToSection, scrollToTop } from './useLenis'
+export { useActiveSection } from './useActiveSection'
+export { useMagnetic } from './useMagnetic'
+export { useCountUp } from './useCountUp'
+export { useKonami } from './useKonami'

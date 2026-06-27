@@ -3,12 +3,16 @@ import { Outlet } from 'react-router'
 import { SceneCanvas } from '@/three/SceneCanvas'
 import { Preloader } from '@/components/loading/Preloader'
 import { RouteFallback } from '@/components/loading/RouteFallback'
-import { ThemeToggle } from '@/components/ThemeToggle'
+import { Navbar } from '@/components/nav/Navbar'
+import { ScrollProgress } from '@/components/nav/ScrollProgress'
+import { SectionIndicator } from '@/components/nav/SectionIndicator'
+import { Cursor } from '@/components/cursor/Cursor'
 import { Toaster } from '@/components/Toaster'
 
 /**
  * App chrome shared across all routes: the persistent 3D canvas behind the
- * content, boot preloader, top-bar controls, the routed outlet, and toasts.
+ * content, boot preloader, navigation + progress UI, custom cursor, the routed
+ * outlet, and toasts.
  */
 export function RootLayout() {
   return (
@@ -16,9 +20,10 @@ export function RootLayout() {
       <SceneCanvas />
       <Preloader />
 
-      <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-end p-4">
-        <ThemeToggle />
-      </header>
+      <ScrollProgress />
+      <Navbar />
+      <SectionIndicator />
+      <Cursor />
 
       <main className="relative">
         <Suspense fallback={<RouteFallback />}>
