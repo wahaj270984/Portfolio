@@ -46,7 +46,7 @@ export const projects: Project[] = [
     ],
     challenges:
       'Coordinating the control unit with the datapath so each instruction cycle fetched, decoded, and executed correctly while respecting hardware timing in simulation.',
-    image: 'projects/sap1-computer.jpg',
+    image: 'projects/sap1-computer.png',
     links: {},
   },
   {

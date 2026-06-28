@@ -3,7 +3,7 @@
 Drop a project's cover image here using the exact filename referenced in
 `src/data/projects.ts` (the `image` field), e.g.:
 
-- `sap1-computer.jpg`      → 8-Bit Computer (SAP-1)
+- `sap1-computer.png`      → 8-Bit Computer (SAP-1)
 - `parking-system.jpg`     → Parking Management System
 - `inventory-system.jpg`   → Inventory Management System
 
