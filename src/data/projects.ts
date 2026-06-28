@@ -73,7 +73,8 @@ export const projects: Project[] = [
     ],
     challenges:
       'Designing reliable occupancy counting and state transitions using only gates, flip-flops, and counters.',
-    image: 'projects/parking-system.jpg',
+    image: 'projects/parking-system.png',
+    imageFit: 'contain',
     links: {},
   },
   {
