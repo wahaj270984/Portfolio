@@ -16,11 +16,17 @@ export interface Project {
   highlights: string[]
   challenges: string
   /**
-   * Optional cover image. A public-folder path (e.g. 'projects/sap1.jpg' served
+   * Optional cover image. A public-folder path (e.g. 'projects/sap1.png' served
    * from /public/projects/), referenced via asset(). If the file is missing the
    * card/modal gracefully fall back to the gradient placeholder.
    */
   image?: string
+  /**
+   * How the cover image fits its frame. 'cover' (default) fills + crops — good
+   * for photos/screenshots. 'contain' shows the whole image framed by the
+   * gradient — better for tall diagrams/schematics.
+   */
+  imageFit?: 'cover' | 'contain'
   links: {
     github?: string
     demo?: string
@@ -47,6 +53,7 @@ export const projects: Project[] = [
     challenges:
       'Coordinating the control unit with the datapath so each instruction cycle fetched, decoded, and executed correctly while respecting hardware timing in simulation.',
     image: 'projects/sap1-computer.png',
+    imageFit: 'contain',
     links: {},
   },
   {

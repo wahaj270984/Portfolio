@@ -58,7 +58,10 @@ function ProjectCard({ project, onOpen, i }: { project: Project; onOpen: () => v
                   alt={`${project.title} preview`}
                   loading="lazy"
                   onError={() => setImgFailed(true)}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className={cn(
+                    'absolute inset-0 h-full w-full transition-transform duration-700 group-hover:scale-105',
+                    project.imageFit === 'contain' ? 'object-contain p-2' : 'object-cover',
+                  )}
                 />
               ) : (
                 <>
@@ -127,7 +130,8 @@ export function Projects() {
             <>
               <div
                 className={cn(
-                  'relative mb-2 flex h-36 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br',
+                  'relative mb-2 flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br',
+                  active.image ? 'h-64' : 'h-28',
                   GRADIENT[active.accent],
                 )}
               >
@@ -138,7 +142,10 @@ export function Projects() {
                     onError={(e) => {
                       e.currentTarget.style.display = 'none'
                     }}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className={cn(
+                      'absolute inset-0 h-full w-full',
+                      active.imageFit === 'contain' ? 'object-contain p-3' : 'object-cover',
+                    )}
                   />
                 ) : (
                   <span className="font-heading text-4xl font-bold text-foreground/20">
