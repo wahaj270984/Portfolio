@@ -115,7 +115,7 @@ export function Projects() {
         index="03"
         eyebrow="Selected Work"
         title={<>Things I've <span className="text-gradient">designed, trained & shipped</span></>}
-        description="A mix of research systems and products. Tap any card for the architecture, highlights and the hard parts."
+        description="A mix of hardware and software builds. Tap any card for the design, highlights, and the hard parts."
       />
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

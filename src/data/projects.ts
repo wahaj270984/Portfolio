@@ -94,7 +94,7 @@ export const projects: Project[] = [
     ],
     challenges:
       'Designing a sound relational schema and wiring reliable CRUD operations against the MySQL backend.',
-    image: 'projects/inventory-system.jpg',
+    image: 'projects/inventory-system.png',
     links: {},
   },
 ]

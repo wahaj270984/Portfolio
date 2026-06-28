@@ -5,7 +5,7 @@ Drop a project's cover image here using the exact filename referenced in
 
 - `sap1-computer.png`      → 8-Bit Computer (SAP-1)
 - `parking-system.png`     → Parking Management System
-- `inventory-system.jpg`   → Inventory Management System
+- `inventory-system.png`   → Inventory Management System
 
 Any web format works (jpg/png/webp) — just keep the path in projects.ts in
 sync with the actual filename/extension. Recommended size ~1200×750 (16:10).
