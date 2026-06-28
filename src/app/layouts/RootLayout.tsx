@@ -6,13 +6,12 @@ import { RouteFallback } from '@/components/loading/RouteFallback'
 import { Navbar } from '@/components/nav/Navbar'
 import { ScrollProgress } from '@/components/nav/ScrollProgress'
 import { SectionIndicator } from '@/components/nav/SectionIndicator'
-import { Cursor } from '@/components/cursor/Cursor'
 import { Toaster } from '@/components/Toaster'
 
 /**
  * App chrome shared across all routes: the site-wide scroll-driven 3D mesh
- * background, boot preloader, navigation + progress UI, custom cursor, the routed
- * outlet, and toasts.
+ * background, boot preloader, navigation + progress UI, the routed outlet, and
+ * toasts. (The native OS cursor is used — no custom cursor overlay.)
  */
 export function RootLayout() {
   return (
@@ -23,7 +22,6 @@ export function RootLayout() {
       <ScrollProgress />
       <Navbar />
       <SectionIndicator />
-      <Cursor />
 
       <main className="relative">
         <Suspense fallback={<RouteFallback />}>
