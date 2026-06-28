@@ -15,6 +15,12 @@ export interface Project {
   tech: string[]
   highlights: string[]
   challenges: string
+  /**
+   * Optional cover image. A public-folder path (e.g. 'projects/sap1.jpg' served
+   * from /public/projects/), referenced via asset(). If the file is missing the
+   * card/modal gracefully fall back to the gradient placeholder.
+   */
+  image?: string
   links: {
     github?: string
     demo?: string
@@ -40,6 +46,7 @@ export const projects: Project[] = [
     ],
     challenges:
       'Coordinating the control unit with the datapath so each instruction cycle fetched, decoded, and executed correctly while respecting hardware timing in simulation.',
+    image: 'projects/sap1-computer.jpg',
     links: {},
   },
   {
@@ -59,6 +66,7 @@ export const projects: Project[] = [
     ],
     challenges:
       'Designing reliable occupancy counting and state transitions using only gates, flip-flops, and counters.',
+    image: 'projects/parking-system.jpg',
     links: {},
   },
   {
@@ -78,6 +86,7 @@ export const projects: Project[] = [
     ],
     challenges:
       'Designing a sound relational schema and wiring reliable CRUD operations against the MySQL backend.',
+    image: 'projects/inventory-system.jpg',
     links: {},
   },
 ]

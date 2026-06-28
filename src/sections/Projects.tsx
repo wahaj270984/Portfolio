@@ -16,6 +16,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog'
 import { projects, type Project } from '@/data/projects'
+import { asset } from '@/config/assets'
 import { cn } from '@/lib/utils'
 
 const GRADIENT: Record<Project['accent'], string> = {
@@ -31,6 +32,10 @@ const BADGE: Record<Project['accent'], 'default' | 'accent' | 'violet'> = {
 }
 
 function ProjectCard({ project, onOpen, i }: { project: Project; onOpen: () => void; i: number }) {
+  // Show the cover image when present; fall back to the gradient if it 404s.
+  const [imgFailed, setImgFailed] = useState(false)
+  const showImage = !!project.image && !imgFailed
+
   return (
     <Reveal from="up" delay={i} className="h-full">
       <TiltCard className="group h-full">
@@ -40,23 +45,35 @@ function ProjectCard({ project, onOpen, i }: { project: Project; onOpen: () => v
           tone="strong"
         >
           <button onClick={onOpen} className="flex h-full flex-col text-left" data-cursor="hover">
-            {/* Holographic preview pane (no binary assets — pure gradient + grid). */}
+            {/* Cover image when available, otherwise a gradient + initials placeholder. */}
             <div
               className={cn(
                 'relative aspect-[16/10] overflow-hidden bg-gradient-to-br',
                 GRADIENT[project.accent],
               )}
             >
-              <div className="absolute inset-0 bg-grid opacity-40" />
-              <div className="absolute inset-0 [transform:translateZ(40px)] grid place-items-center">
-                <span className="font-heading text-5xl font-bold text-foreground/15">
-                  {project.title
-                    .split(' ')
-                    .map((w) => w[0])
-                    .slice(0, 2)
-                    .join('')}
-                </span>
-              </div>
+              {showImage ? (
+                <img
+                  src={asset(project.image!)}
+                  alt={`${project.title} preview`}
+                  loading="lazy"
+                  onError={() => setImgFailed(true)}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              ) : (
+                <>
+                  <div className="absolute inset-0 bg-grid opacity-40" />
+                  <div className="absolute inset-0 [transform:translateZ(40px)] grid place-items-center">
+                    <span className="font-heading text-5xl font-bold text-foreground/15">
+                      {project.title
+                        .split(' ')
+                        .map((w) => w[0])
+                        .slice(0, 2)
+                        .join('')}
+                    </span>
+                  </div>
+                </>
+              )}
               <div className="absolute left-3 top-3 flex gap-2">
                 <Badge variant={BADGE[project.accent]}>{project.category}</Badge>
               </div>
@@ -110,13 +127,24 @@ export function Projects() {
             <>
               <div
                 className={cn(
-                  'mb-2 flex h-28 items-center justify-center rounded-xl bg-gradient-to-br',
+                  'relative mb-2 flex h-36 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br',
                   GRADIENT[active.accent],
                 )}
               >
-                <span className="font-heading text-4xl font-bold text-foreground/20">
-                  {active.title}
-                </span>
+                {active.image ? (
+                  <img
+                    src={asset(active.image)}
+                    alt={`${active.title} preview`}
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none'
+                    }}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="font-heading text-4xl font-bold text-foreground/20">
+                    {active.title}
+                  </span>
+                )}
               </div>
               <DialogHeader>
                 <div className="flex flex-wrap items-center gap-2">
