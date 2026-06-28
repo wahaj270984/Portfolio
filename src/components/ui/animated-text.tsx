@@ -83,7 +83,12 @@ export function WordsReveal({ text, className, wordClassName }: WordsRevealProps
   return (
     <span className={className}>
       {words.map((word, i) => (
-        <span key={`${word}-${i}`} className="inline-block overflow-hidden align-bottom">
+        <span
+          key={`${word}-${i}`}
+          // pb/-mb give descenders (j, g, y) room inside the reveal clip box
+          // without changing the tight headline line-height.
+          className="inline-block overflow-hidden align-bottom pb-[0.2em] -mb-[0.2em]"
+        >
           <span
             className={cn('inline-block', wordClassName)}
             style={

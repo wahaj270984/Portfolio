@@ -90,7 +90,7 @@ export function Navbar() {
               variant="outline"
               className="hidden rounded-full sm:inline-flex"
             >
-              <a href={site.resumeUrl} target="_blank" rel="noreferrer">
+              <a href={site.resumeUrl} download="Muhammad-Wahaj-Khan-Resume.pdf">
                 Résumé
               </a>
             </Button>

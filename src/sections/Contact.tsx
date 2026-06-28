@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
-import { ArrowUpRight, MapPin, Mail, FileText } from 'lucide-react'
+import { Download, MapPin, Mail, FileText } from 'lucide-react'
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa6'
 import { Section } from '@/components/layout/Section'
 import { SectionHeading } from '@/components/ui/section-heading'
@@ -224,8 +224,8 @@ export function Contact() {
                 </a>
               </MagneticButton>
               <MagneticButton asChild variant="ghost" className="rounded-full">
-                <a href={site.resumeUrl} target="_blank" rel="noreferrer">
-                  <FileText /> Résumé <ArrowUpRight />
+                <a href={site.resumeUrl} download="Muhammad-Wahaj-Khan-Resume.pdf">
+                  <FileText /> Download Résumé <Download />
                 </a>
               </MagneticButton>
             </div>
