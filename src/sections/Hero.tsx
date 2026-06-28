@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge'
 import { MagneticButton } from '@/components/ui/magnetic-button'
 import { TypeCycle, WordsReveal } from '@/components/ui/animated-text'
 import { TechMarquee } from '@/components/ui/tech-marquee'
-import { SplineHero } from '@/components/spline/SplineHero'
 import { site } from '@/config/site'
 import { scrollToSection } from '@/hooks'
 
@@ -31,14 +30,12 @@ const socials = [
 ]
 
 /**
- * Landing section. The 3D hero core renders behind via the persistent canvas;
+ * Landing section. The neural-constellation canvas renders behind;
  * here we layer the identity, animated roles, CTAs and scroll cue on top.
  */
 export function Hero() {
   return (
     <Section id="hero" full bare aria-label="Introduction">
-      <SplineHero />
-
       <Container className="relative z-10">
       <div className="flex flex-col items-start gap-7">
         <motion.div

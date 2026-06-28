@@ -3,19 +3,18 @@ import {
   About,
   Skills,
   Projects,
-  Experience,
-  Research,
+  WorkResearch,
   Education,
-  Achievements,
   Certifications,
+  TechTrivia,
   Contact,
   Footer,
 } from '@/sections'
 
 /**
- * The single scroll-driven page. Each section is a semantic landmark that the
- * camera rig, scrollspy and 3D world key their state off. The persistent canvas
- * (mounted in RootLayout) renders the cohesive 3D universe behind all of this.
+ * The single scroll-driven page. Each section is a semantic landmark that
+ * scroll state and the animated background key off. The neural-constellation
+ * canvas (mounted in RootLayout) renders behind all sections.
  */
 export function HomePage() {
   return (
@@ -24,11 +23,10 @@ export function HomePage() {
       <About />
       <Skills />
       <Projects />
-      <Experience />
-      <Research />
+      <WorkResearch />
       <Education />
-      <Achievements />
       <Certifications />
+      <TechTrivia />
       <Contact />
       <Footer />
     </>

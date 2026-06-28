@@ -1,24 +1,41 @@
 import { useEffect, useState } from 'react'
-import { useProgress } from '@react-three/drei'
 import { site } from '@/config/site'
 import { cn } from '@/lib/utils'
 
 /**
- * Full-screen boot overlay driven by drei's asset-loading progress. Fades out
- * and unmounts once the scene's assets finish loading.
+ * Full-screen boot overlay with simulated load progress. Fades out after
+ * a brief delay to let the neural background initialize.
  */
 export function Preloader() {
-  const { progress, active } = useProgress()
+  const [progress, setProgress] = useState(0)
   const [visible, setVisible] = useState(true)
 
   useEffect(() => {
-    if (active) return
-    // Hold briefly so the fade-out reads, then unmount.
-    const id = window.setTimeout(() => setVisible(false), 600)
-    return () => window.clearTimeout(id)
-  }, [active])
+    // Simulate loading progress
+    const duration = 1500
+    const steps = 60
+    const increment = 100 / steps
+    const interval = duration / steps
+
+    let current = 0
+    const timer = setInterval(() => {
+      current += increment
+      if (current >= 100) {
+        setProgress(100)
+        clearInterval(timer)
+        // Hold briefly then fade out
+        setTimeout(() => setVisible(false), 400)
+      } else {
+        setProgress(current)
+      }
+    }, interval)
+
+    return () => clearInterval(timer)
+  }, [])
 
   if (!visible) return null
+
+  const active = progress < 100
 
   return (
     <div

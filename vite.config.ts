@@ -3,24 +3,18 @@ import { defineConfig } from 'vite'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
-import glsl from 'vite-plugin-glsl'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    // React Compiler — auto-memoizes components; valuable under the heavy R3F
-    // render workload. Runs via Rolldown's Babel hook (Vite 8).
+    // React Compiler — auto-memoizes components
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
-    glsl(),
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  // 3D asset pipeline — treat models / HDRIs / compressed textures as assets
-  // so they get hashed + emitted and can be imported with `?url`.
-  assetsInclude: ['**/*.glb', '**/*.gltf', '**/*.hdr', '**/*.exr', '**/*.ktx2'],
 })
