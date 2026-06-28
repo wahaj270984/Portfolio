@@ -38,4 +38,22 @@ export const certifications: Certification[] = [
       'https://www.coursera.org/account/accomplishments/specialization/L97U0AP5UN2O',
     accent: 'violet',
   },
+  {
+    id: 'bash-scripting',
+    title: 'Mastering Bash Shell Scripting',
+    issuer: 'Udemy',
+    year: '2025',
+    credentialUrl:
+      'https://www.udemy.com/certificate/UC-6e13004c-e8f5-4a53-a0cb-ca35e595bc23/',
+    accent: 'primary',
+  },
+  {
+    id: 'data-analyst',
+    title: 'Data Analyst: Professional Certificate in Data Analysis',
+    issuer: 'Udemy',
+    year: '2025',
+    credentialUrl:
+      'https://www.udemy.com/certificate/UC-41a3f17f-4af5-4604-ab64-775a257da6ac/',
+    accent: 'accent',
+  },
 ]
