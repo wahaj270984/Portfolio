@@ -107,7 +107,8 @@ export function NeuralBackground() {
       const dpr = window.devicePixelRatio || 1
       canvas.width = canvas.offsetWidth * dpr
       canvas.height = canvas.offsetHeight * dpr
-      ctx.scale(dpr, dpr)
+      // setTransform (not scale) so repeated resizes don't compound the DPR.
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
     resize()
     window.addEventListener('resize', resize)
@@ -251,7 +252,9 @@ export function NeuralBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0"
+      // h-screen/w-screen: a <canvas> is a replaced element, so `inset-0` alone
+      // leaves it at its intrinsic 300×150 (a stray fragment in the corner).
+      className="pointer-events-none fixed inset-0 z-0 h-screen w-screen"
       aria-hidden
     />
   )

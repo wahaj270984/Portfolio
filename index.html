@@ -7,6 +7,29 @@
     <meta name="theme-color" content="#05070e" />
     <meta name="color-scheme" content="dark light" />
 
+    <!-- Anti-FOUC: resolve & apply the persisted theme before first paint, so a
+         dark-preference reload never flashes the light :root tokens. Mirrors the
+         logic in ThemeProvider / useTheme (zustand-persist key "theme"). -->
+    <script>
+      (function () {
+        try {
+          var raw = localStorage.getItem('theme')
+          var pref = raw && (JSON.parse(raw).state || {}).preference
+          if (pref !== 'light' && pref !== 'dark' && pref !== 'system') pref = 'dark'
+          var resolved =
+            pref === 'system'
+              ? window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light'
+              : pref
+          document.documentElement.dataset.theme = resolved
+          document.documentElement.style.colorScheme = resolved
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark'
+        }
+      })()
+    </script>
+
     <title>Muhammad Wahaj Khan — ML Engineer &amp; AI Researcher</title>
     <meta
       name="description"
@@ -57,7 +80,7 @@
         ],
         "sameAs": [
           "https://github.com/wahajkhan",
-          "https://linkedin.com/in/wahajkhan"
+          "https://linkedin.com/in/hafiz-muhammad-wahaj-khan"
         ]
       }
     </script>
