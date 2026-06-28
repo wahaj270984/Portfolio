@@ -1,4 +1,4 @@
-import { BadgeCheck } from 'lucide-react'
+import { ArrowUpRight, BadgeCheck } from 'lucide-react'
 import { Section } from '@/components/layout/Section'
 import { SectionHeading } from '@/components/ui/section-heading'
 import { GlassPanel } from '@/components/ui/glass-panel'
@@ -20,7 +20,7 @@ export function Certifications() {
         index="06"
         eyebrow="Certifications"
         title={<>Credentials, <span className="text-gradient">verified</span></>}
-        description="Formal stamps on the skills — hover a panel for the credential ID."
+        description="Formal stamps on the skills — click any to verify the credential."
       />
 
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -47,7 +47,17 @@ export function Certifications() {
                 {cert.title}
               </h3>
               <p className="mt-1 text-sm text-muted-foreground">{cert.issuer}</p>
-              {cert.credentialId && (
+              {cert.credentialUrl && (
+                <a
+                  href={cert.credentialUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="relative z-10 mt-4 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+                >
+                  Verify credential <ArrowUpRight className="size-3.5" />
+                </a>
+              )}
+              {!cert.credentialUrl && cert.credentialId && (
                 <p className="mt-4 font-mono text-[11px] uppercase tracking-wider text-muted-foreground/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   ID · {cert.credentialId}
                 </p>
