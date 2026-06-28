@@ -10,7 +10,12 @@ import { useExperience } from '@/store/useExperience'
  */
 export function Cursor() {
   const reducedMotion = useExperience((s) => s.reducedMotion)
-  const [enabled, setEnabled] = useState(false)
+  // Coarse-pointer probe runs once; combined with reduced motion it derives
+  // `enabled` without an effect (no setState-in-effect cascade).
+  const [coarsePointer] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches,
+  )
+  const enabled = !reducedMotion && !coarsePointer
   const [hovering, setHovering] = useState(false)
   const [down, setDown] = useState(false)
 
@@ -20,9 +25,7 @@ export function Cursor() {
   const ringY = useSpring(y, { stiffness: 350, damping: 32, mass: 0.6 })
 
   useEffect(() => {
-    if (reducedMotion) return
-    if (window.matchMedia('(pointer: coarse)').matches) return
-    setEnabled(true)
+    if (!enabled) return
 
     const move = (e: PointerEvent) => {
       x.set(e.clientX)
@@ -41,7 +44,7 @@ export function Cursor() {
       window.removeEventListener('pointerdown', onDown)
       window.removeEventListener('pointerup', onUp)
     }
-  }, [reducedMotion, x, y])
+  }, [enabled, x, y])
 
   if (!enabled) return null
 

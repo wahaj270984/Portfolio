@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import {
   AdditiveBlending,
   Color,
@@ -58,9 +58,8 @@ function build(): NetData {
  * in around the Skills / Research sections via the shared presence helper.
  */
 export function NeuralNetwork() {
-  const data = useRef<NetData>(null)
-  if (!data.current) data.current = build()
-  const { nodes, edges } = data.current
+  // Built once for stable geometry/edge buffers across renders.
+  const { nodes, edges } = useMemo(() => build(), [])
 
   const group = useRef<Group>(null)
   const inst = useRef<InstancedMesh>(null)

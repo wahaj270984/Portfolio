@@ -109,7 +109,7 @@ function Terminal() {
       tone="strong"
       pad="none"
       glow="primary"
-      className="flex h-[440px] flex-col overflow-hidden font-mono text-sm"
+      className="flex h-[360px] flex-col overflow-hidden font-mono text-sm sm:h-[420px] lg:h-[440px]"
       onClick={() => inputRef.current?.focus()}
     >
       {/* Title bar */}

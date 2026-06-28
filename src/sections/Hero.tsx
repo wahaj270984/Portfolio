@@ -2,11 +2,27 @@ import { motion } from 'framer-motion'
 import { ArrowDown, ArrowRight, Sparkles } from 'lucide-react'
 import { FaGithub, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
 import { Section } from '@/components/layout/Section'
+import { Container } from '@/components/ui/container'
 import { Badge } from '@/components/ui/badge'
 import { MagneticButton } from '@/components/ui/magnetic-button'
 import { TypeCycle, WordsReveal } from '@/components/ui/animated-text'
+import { TechMarquee } from '@/components/ui/tech-marquee'
+import { SplineHero } from '@/components/spline/SplineHero'
 import { site } from '@/config/site'
 import { scrollToSection } from '@/hooks'
+
+const tech = [
+  'Python',
+  'PyTorch',
+  'TensorFlow',
+  'OpenCV',
+  'React',
+  'TypeScript',
+  'Three.js',
+  'Node.js',
+  'Docker',
+  'Linux',
+]
 
 const socials = [
   { href: site.links.github, label: 'GitHub', Icon: FaGithub },
@@ -20,7 +36,10 @@ const socials = [
  */
 export function Hero() {
   return (
-    <Section id="hero" full aria-label="Introduction">
+    <Section id="hero" full bare aria-label="Introduction">
+      <SplineHero />
+
+      <Container className="relative z-10">
       <div className="flex flex-col items-start gap-7">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -99,11 +118,24 @@ export function Hero() {
             ))}
           </div>
         </motion.div>
+
+        <motion.div
+          className="mt-2 w-full"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+        >
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-muted-foreground/70">
+            Tooling
+          </p>
+          <TechMarquee items={tech} />
+        </motion.div>
       </div>
+      </Container>
 
       <motion.button
         onClick={() => scrollToSection('about')}
-        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted-foreground"
+        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted-foreground"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4 }}

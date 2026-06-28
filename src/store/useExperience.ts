@@ -31,7 +31,9 @@ export const useExperience = create<ExperienceState>((set) => ({
   activeSection: null,
   quality: 'high',
   reducedMotion: false,
-  useR3FHero: true,
+  // Spline hero is primary; the SplineHero component flips this to true to fall
+  // back to the native R3F core on load failure or reduced-motion preference.
+  useR3FHero: false,
   hyperdrive: false,
 
   setScrollProgress: (value) => set({ scrollProgress: value }),

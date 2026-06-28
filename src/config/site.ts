@@ -18,6 +18,12 @@ export const site = {
   email: 'wahaj.khan@example.com',
   location: 'Islamabad, Pakistan',
   resumeUrl: '/resume.pdf',
+  /**
+   * Public Spline scene driving the interactive hero centerpiece. Swap this for
+   * your own published `.splinecode` URL (Spline → Export → Code/Viewer). If the
+   * scene fails to load, the hero gracefully falls back to the native R3F core.
+   */
+  splineHeroUrl: 'https://prod.spline.design/Wft2dFG8Xb3rwh3X/scene.splinecode',
   links: {
     github: 'https://github.com/wahajkhan',
     linkedin: 'https://linkedin.com/in/wahajkhan',

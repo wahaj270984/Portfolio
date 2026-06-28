@@ -11,6 +11,9 @@ import { NebulaMaterial } from '../shaders/nebula/NebulaMaterial'
  */
 export function Nebula() {
   const matRef = useRef<InstanceType<typeof NebulaMaterial>>(null)
+  // Drop the expensive second turbulence pass on the low tier.
+  const quality = useExperience((s) => s.quality)
+  const detail = quality === 'low' ? 0 : 1
 
   useAnimationTick(({ elapsed }) => {
     const mat = matRef.current
@@ -23,7 +26,7 @@ export function Nebula() {
   return (
     <mesh scale={40} frustumCulled={false}>
       <sphereGeometry args={[1, 48, 32]} />
-      <nebulaMaterial ref={matRef} side={BackSide} depthWrite={false} fog={false} />
+      <nebulaMaterial ref={matRef} uDetail={detail} side={BackSide} depthWrite={false} fog={false} />
     </mesh>
   )
 }

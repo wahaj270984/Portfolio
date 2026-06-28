@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { AdditiveBlending, type Points } from 'three'
 import { useAnimationTick } from '../animation/AnimationManager'
 import { useExperience } from '@/store/useExperience'
@@ -35,11 +35,8 @@ export function Dust() {
   const quality = useExperience((s) => s.quality)
   const count = quality === 'low' ? 120 : quality === 'medium' ? 240 : 360
 
-  const buffers = useRef<Buffers>(null)
-  if (!buffers.current || buffers.current.count !== count) {
-    buffers.current = generate(count)
-  }
-  const { positions, scales, phases } = buffers.current
+  // Regenerated only when the quality-driven count changes.
+  const { positions, scales, phases } = useMemo(() => generate(count), [count])
 
   const ref = useRef<Points>(null)
   const matRef = useRef<InstanceType<typeof StarsMaterial>>(null)

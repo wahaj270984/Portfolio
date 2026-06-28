@@ -32,7 +32,10 @@ export function Certifications() {
               data-cursor="hover"
             >
               {/* Animated shine sweep on hover. */}
-              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+              />
 
               <div className="flex items-start justify-between gap-3">
                 <BadgeCheck className={cn('size-7', DOT[cert.accent])} />

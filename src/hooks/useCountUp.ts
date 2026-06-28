@@ -15,16 +15,13 @@ export function useCountUp(target: number, durationMs = 1400) {
 
   useEffect(() => {
     if (!inView) return
-    if (reducedMotion) {
-      setValue(target)
-      return
-    }
 
     let frame = 0
     let start: number | null = null
     const tick = (now: number) => {
       if (start === null) start = now
-      const t = Math.min((now - start) / durationMs, 1)
+      // Reduced motion jumps straight to the target on the first frame.
+      const t = reducedMotion ? 1 : Math.min((now - start) / durationMs, 1)
       // easeOutCubic
       const eased = 1 - Math.pow(1 - t, 3)
       setValue(Math.round(eased * target))

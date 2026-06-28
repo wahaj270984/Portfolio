@@ -23,6 +23,7 @@ const fragment = /* glsl */ `
   uniform vec3 uColorB;
   uniform vec3 uColorC;
   uniform float uIntensity;
+  uniform float uDetail; // 1.0 = full (two fbm passes), 0.0 = cheap (single pass)
   varying vec3 vPos;
 
   // --- Ashima simplex noise (3D) -------------------------------------------
@@ -87,7 +88,8 @@ const fragment = /* glsl */ `
     vec3 q = dir * 1.6;
     float t = uTime * 0.03;
     float n = fbm(q + vec3(t, -t * 0.5, t * 0.3));
-    float n2 = fbm(q * 2.0 + n + vec3(-t, t, 0.0));
+    // Second turbulence pass is the expensive half; skipped on low-end devices.
+    float n2 = uDetail > 0.5 ? fbm(q * 2.0 + n + vec3(-t, t, 0.0)) : 0.0;
     float clouds = smoothstep(-0.2, 0.9, n + 0.4 * n2);
 
     vec3 col = mix(uColorA, uColorB, clouds);
@@ -109,6 +111,7 @@ export const NebulaMaterial = shaderMaterial(
     uColorB: new Color('#1e3a8a'),
     uColorC: new Color('#22d3ee'),
     uIntensity: 1,
+    uDetail: 1,
   },
   vertex,
   fragment,

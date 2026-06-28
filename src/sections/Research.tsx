@@ -27,7 +27,7 @@ export function Research() {
           <Reveal key={pub.id} from="up" delay={i} className="h-full">
             <GlassPanel pad="lg" className="flex h-full flex-col" glow={i === 0 ? 'primary' : 'none'}>
               <div className="flex items-center justify-between">
-                <Quote className="size-5 text-primary/60" />
+                <Quote className="size-5 text-primary/60" aria-hidden />
                 <Badge variant={STATUS[pub.status]}>{pub.status}</Badge>
               </div>
               <h3 className="mt-4 font-heading text-base font-semibold leading-snug">

@@ -34,14 +34,16 @@ export function TypeCycle({
       const id = window.setTimeout(() => setDeleting(true), holdMs)
       return () => window.clearTimeout(id)
     }
-    if (deleting && text === '') {
-      setDeleting(false)
-      setIndex((i) => (i + 1) % words.length)
-      return
-    }
 
+    // All state transitions happen inside the timeout callback (not the effect
+    // body) so the typewriter never triggers a synchronous setState cascade.
     const id = window.setTimeout(
       () => {
+        if (deleting && text === '') {
+          setDeleting(false)
+          setIndex((i) => (i + 1) % words.length)
+          return
+        }
         setText((prev) =>
           deleting ? prev.slice(0, -1) : current.slice(0, prev.length + 1),
         )

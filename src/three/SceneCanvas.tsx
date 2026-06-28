@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { AdaptiveDpr, AdaptiveEvents, Preload } from '@react-three/drei'
-import { Perf } from 'r3f-perf'
 import { ACESFilmicToneMapping } from 'three'
 import { useExperience } from '@/store/useExperience'
 import { CanvasErrorBoundary } from './CanvasErrorBoundary'
@@ -36,8 +35,6 @@ export function SceneCanvas() {
             toneMappingExposure: 1.1,
           }}
         >
-          {import.meta.env.DEV && <Perf position="bottom-left" />}
-
           {/* Adaptive quality: sample FPS and step the tier up/down. */}
           <PerformanceManager />
           {/* Single frame loop driving every registered animation tick. */}

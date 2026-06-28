@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import {
   Color,
   MathUtils,
@@ -47,9 +47,10 @@ function build(): Orb[] {
  * cross-fades in around About / Skills.
  */
 export function SkillField() {
-  const orbs = useRef<Orb[]>(null)
-  if (!orbs.current) orbs.current = build()
-  const data = orbs.current
+  // Stable identity: built once, never regenerated (avoids re-uploading the
+  // instanced buffers every render). Math.random() inside makes it impure, so
+  // the React Compiler can't memoize it for us.
+  const data = useMemo(() => build(), [])
 
   const group = useRef<Group>(null)
   const inst = useRef<InstancedMesh>(null)
