@@ -154,7 +154,7 @@ export function MeshField() {
           const yR = ly * cosP - lz * sinP
           const zR = ly * sinP + lz * cosP
           const scale = focal / (zR + camDist)
-          let screenX = cx + lx * scale
+          const screenX = cx + lx * scale
           let screenY = cy - yR * scale
 
           let l = 0
