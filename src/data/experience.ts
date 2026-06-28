@@ -12,46 +12,18 @@ export interface ExperienceItem {
 
 export const experience: ExperienceItem[] = [
   {
-    id: 'ml-research-intern',
-    role: 'Machine Learning Research Intern',
-    org: 'Vision & AI Research Lab',
-    period: '2025 — Present',
-    location: 'NUST SEECS',
+    id: 'ml-research',
+    role: 'Independent Machine Learning Research',
+    org: 'NUST — under Dr. Ahmed Naeem',
+    period: 'May 2026 — June 2026',
+    location: 'Islamabad, Pakistan',
     summary:
-      'Researching real-time video analytics and multi-object tracking for large-scale camera networks.',
+      'Independent supervised-learning research exploring core machine-learning concepts and their practical implementation in Python.',
     achievements: [
-      'Designed a dynamic batching scheduler improving multi-stream throughput 2.3×',
-      'Published internal benchmarks for tracking under occlusion',
-      'Mentored two junior students on the CV pipeline',
+      'Worked on supervised machine-learning concepts including regression and classification',
+      'Studied model evaluation, overfitting, and the training workflow using Python',
+      'Applied statistical learning and probabilistic modeling toward modern AI techniques',
     ],
-    tags: ['Computer Vision', 'PyTorch', 'Video Analytics'],
-  },
-  {
-    id: 'cv-engineer',
-    role: 'Computer Vision Engineer (Part-time)',
-    org: 'Independent / Freelance',
-    period: '2024 — 2025',
-    location: 'Remote',
-    summary:
-      'Built and deployed custom detection and segmentation models for startup clients.',
-    achievements: [
-      'Shipped 6 production vision models across retail and robotics',
-      'Cut a client inference bill 60% via quantisation + batching',
-    ],
-    tags: ['Detection', 'Segmentation', 'Deployment'],
-  },
-  {
-    id: 'fullstack-dev',
-    role: 'Full-Stack Developer',
-    org: 'University Projects & Hackathons',
-    period: '2023 — 2024',
-    location: 'Islamabad',
-    summary:
-      'Delivered web platforms pairing ML backends with polished React frontends.',
-    achievements: [
-      'Won 2 hackathons with ML-powered web products',
-      'Built reusable component systems used across team projects',
-    ],
-    tags: ['React', 'Node.js', 'TypeScript'],
+    tags: ['Machine Learning', 'Python', 'Supervised Learning'],
   },
 ]

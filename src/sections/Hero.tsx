@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowDown, ArrowRight, Sparkles } from 'lucide-react'
-import { FaGithub, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
+import { FaGithub, FaLinkedinIn } from 'react-icons/fa6'
 import { Section } from '@/components/layout/Section'
 import { Container } from '@/components/ui/container'
 import { Badge } from '@/components/ui/badge'
@@ -12,21 +12,20 @@ import { scrollToSection } from '@/hooks'
 
 const tech = [
   'Python',
-  'PyTorch',
-  'TensorFlow',
-  'OpenCV',
-  'React',
-  'TypeScript',
-  'Three.js',
-  'Node.js',
-  'Docker',
-  'Linux',
+  'C / C++',
+  'Verilog HDL',
+  'NumPy',
+  'Pandas',
+  'Scikit-learn',
+  'Matplotlib',
+  'MySQL',
+  'Proteus',
+  'ModelSim',
 ]
 
 const socials = [
   { href: site.links.github, label: 'GitHub', Icon: FaGithub },
   { href: site.links.linkedin, label: 'LinkedIn', Icon: FaLinkedinIn },
-  { href: site.links.twitter, label: 'Twitter', Icon: FaXTwitter },
 ]
 
 /**
@@ -48,7 +47,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/70" />
               <span className="relative inline-flex size-2 rounded-full bg-accent" />
             </span>
-            Available for research & freelance
+            Open to internships & collaborations
           </Badge>
         </motion.div>
 
@@ -79,9 +78,9 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
         >
-          I build intelligent systems that see, reason, and ship — from
-          computer-vision research at NUST SEECS to production full-stack
-          interfaces.
+          I'm a Computer Engineering student at NUST building a strong
+          foundation in machine learning, Python, and digital systems — from an
+          8-bit CPU in Verilog to database-driven software.
         </motion.p>
 
         <motion.div

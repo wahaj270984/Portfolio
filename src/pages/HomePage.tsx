@@ -3,7 +3,7 @@ import {
   About,
   Skills,
   Projects,
-  WorkResearch,
+  Work,
   Education,
   Certifications,
   TechTrivia,
@@ -23,7 +23,7 @@ export function HomePage() {
       <About />
       <Skills />
       <Projects />
-      <WorkResearch />
+      <Work />
       <Education />
       <Certifications />
       <TechTrivia />

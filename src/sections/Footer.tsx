@@ -1,5 +1,5 @@
 import { ArrowUp } from 'lucide-react'
-import { FaGithub, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
+import { FaGithub, FaLinkedinIn } from 'react-icons/fa6'
 import { Container } from '@/components/ui/container'
 import { Button } from '@/components/ui/button'
 import { site } from '@/config/site'
@@ -9,7 +9,6 @@ import { scrollToSection, scrollToTop } from '@/hooks'
 const socials = [
   { href: site.links.github, label: 'GitHub', Icon: FaGithub },
   { href: site.links.linkedin, label: 'LinkedIn', Icon: FaLinkedinIn },
-  { href: site.links.twitter, label: 'Twitter', Icon: FaXTwitter },
 ]
 
 export function Footer() {
@@ -49,7 +48,7 @@ export function Footer() {
 
           <div className="flex flex-col-reverse items-start justify-between gap-4 border-t border-border/60 pt-6 sm:flex-row sm:items-center">
             <p className="text-xs text-muted-foreground">
-              © {site.author}. Built with React Three Fiber, GLSL & a lot of coffee.
+              © {site.author}. Built with React, TypeScript & Tailwind.
             </p>
 
             <div className="flex items-center gap-1">

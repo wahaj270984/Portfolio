@@ -12,26 +12,26 @@ export interface EducationItem {
 export const education: EducationItem[] = [
   {
     id: 'nust',
-    degree: 'BE Computer Engineering',
+    degree: 'BS Computer Engineering',
     institution: 'NUST — School of Electrical Engineering & Computer Science (SEECS)',
-    period: '2022 — 2026',
-    location: 'Islamabad, Pakistan',
+    period: '2025 — 2029 (expected)',
+    location: 'H-12, Islamabad, Pakistan',
     details:
-      'Specialising in machine learning, computer vision, and embedded systems, with research alongside coursework.',
+      'Computer Engineering with a focus on machine learning, programming, and digital systems.',
     highlights: [
-      "Dean's List for academic excellence",
-      'Research assistant in the vision lab',
-      'Coursework: Deep Learning, Computer Architecture, Algorithms, DSP',
+      '3.42 GPA',
+      'Coursework: Programming Fundamentals, OOP, Digital Logic Design',
+      'Calculus & Linear Algebra',
     ],
   },
   {
-    id: 'preeng',
-    degree: 'Pre-Engineering (FSc)',
-    institution: 'Higher Secondary',
-    period: '2020 — 2022',
-    location: 'Pakistan',
+    id: 'fsc',
+    degree: 'FSc Pre-Engineering',
+    institution: 'Govt Degree Science & Commerce College, Malir Cantt',
+    period: '2023 — 2025',
+    location: 'Karachi, Pakistan',
     details:
-      'Mathematics, Physics, and Computer Science foundation with top-tier results.',
-    highlights: ['Distinction in Mathematics & Physics'],
+      'Pre-Engineering foundation in mathematics, physics, and chemistry.',
+    highlights: ['81% Grade'],
   },
 ]

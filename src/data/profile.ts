@@ -11,28 +11,27 @@ export interface Stat {
 
 export const profile = {
   name: 'Muhammad Wahaj Khan',
-  headline: 'I build intelligent systems that see, reason, and ship.',
+  headline: 'Building a strong foundation in ML, programming, and digital systems.',
   summary:
-    'Computer Engineering student at NUST SEECS and machine-learning researcher focused on computer vision, deep learning, and generative AI. I move comfortably from CUDA-level model work to production full-stack interfaces — turning research into things people can actually use.',
+    'Computer Engineering student at NUST with a strong foundation in machine learning, programming, and digital systems. Experienced in supervised learning concepts and practical implementation using Python, with additional exposure to data analysis and database-driven software development.',
   bio: [
-    'My work sits at the intersection of research and engineering: training and optimising vision models, then wrapping them in fast, well-crafted web experiences.',
-    'I care about systems that are both rigorous and delightful — measurable accuracy under the hood, and an interface that feels effortless on top.',
+    'I completed academic and self-driven projects in computer architecture and backend systems — from an 8-bit SAP-1 CPU in Verilog to a database-driven inventory system in Python and MySQL.',
+    'I enjoy work that rewards problem-solving and systems thinking: understanding how things work end to end, from logic gates and processor cycles up to model training and data pipelines.',
   ],
   interests: [
-    'Artificial Intelligence',
-    'Computer Vision',
     'Machine Learning',
-    'Deep Learning',
-    'Generative AI',
-    'Web Development',
-    'Robotics',
+    'Supervised Learning',
+    'Computer Architecture',
+    'Digital Logic Design',
+    'Data Analysis',
+    'Backend Development',
     'Embedded Systems',
-    'Research',
+    'Python',
   ],
   stats: [
-    { label: 'Projects shipped', value: 24, suffix: '+' },
-    { label: 'Research areas', value: 5 },
-    { label: 'Models trained', value: 40, suffix: '+' },
-    { label: 'Coffee per week', value: 21, suffix: '☕' },
+    { label: 'Academic Projects', value: 3 },
+    { label: 'Certifications', value: 3 },
+    { label: 'Core Languages', value: 3 },
+    { label: 'FSc Grade', value: 81, suffix: '%' },
   ] satisfies Stat[],
 } as const

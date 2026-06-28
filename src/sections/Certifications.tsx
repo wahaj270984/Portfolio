@@ -47,9 +47,11 @@ export function Certifications() {
                 {cert.title}
               </h3>
               <p className="mt-1 text-sm text-muted-foreground">{cert.issuer}</p>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-wider text-muted-foreground/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                ID · {cert.credentialId}
-              </p>
+              {cert.credentialId && (
+                <p className="mt-4 font-mono text-[11px] uppercase tracking-wider text-muted-foreground/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  ID · {cert.credentialId}
+                </p>
+              )}
             </GlassPanel>
             </TiltCard>
           </Reveal>
