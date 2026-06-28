@@ -165,7 +165,7 @@ export function Contact() {
   return (
     <Section id="contact" aria-label="Contact">
       <SectionHeading
-        index="09"
+        index="08"
         eyebrow="Contact"
         title={<>Let's <span className="text-gradient">build something</span></>}
         description="Type a command, or just say hi the old-fashioned way. I read everything."

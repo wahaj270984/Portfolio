@@ -10,7 +10,7 @@ export function Education() {
   return (
     <Section id="education" aria-label="Education">
       <SectionHeading
-        index="06"
+        index="05"
         eyebrow="Education"
         title={<>Foundations at <span className="text-gradient">NUST SEECS</span></>}
         description="Computer Engineering, with research running alongside the coursework."

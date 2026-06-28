@@ -17,7 +17,7 @@ export function Certifications() {
   return (
     <Section id="certifications" aria-label="Certifications">
       <SectionHeading
-        index="08"
+        index="06"
         eyebrow="Certifications"
         title={<>Credentials, <span className="text-gradient">verified</span></>}
         description="Formal stamps on the skills — hover a panel for the credential ID."

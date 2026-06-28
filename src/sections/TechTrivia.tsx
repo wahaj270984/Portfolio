@@ -52,7 +52,7 @@ export function TechTrivia() {
   return (
     <Section id="tech-trivia" aria-label="Technical trivia">
       <SectionHeading
-        index="10"
+        index="07"
         eyebrow="Technical Trivia"
         title={
           <>
