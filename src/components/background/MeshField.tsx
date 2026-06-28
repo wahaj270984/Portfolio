@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useExperience } from '@/store/useExperience'
 
-const COLS = 36
-const ROWS = 18
+const COLS = 34
+const ROWS = 20
 
 type RGB = readonly [number, number, number]
 
@@ -23,18 +23,22 @@ const lerp = (a: RGB, b: RGB, t: number): RGB => [
 ]
 
 /**
- * Immersive 3D wireframe mesh, in the spirit of animejs.com: a perspective-tilted
- * grid of points connected by glowing lines that undulate in a travelling wave and
- * lift toward the cursor. Rendered on a canvas with hand-rolled 3D projection — so it
- * always paints (no fragile CSS 3D), runs off one rAF loop (no React re-renders), and
- * re-reads its colours from the live CSS theme vars whenever `[data-theme]` flips.
- * Honors reduced-motion by drawing a single calm frame.
+ * The single, site-wide 3D background — one fixed, transparent canvas behind the
+ * whole page so there is no seam between the hero and the rest of the site. A
+ * perspective wireframe mesh undulates in a travelling wave, lifts toward the
+ * cursor, and — crucially — its camera is driven by scroll: as you move down the
+ * page the camera tilts further onto the plane, the horizon drifts, the surface
+ * flows toward you and the field yaws slightly, so scrolling feels like flying
+ * over the mesh.
+ *
+ * Scroll is read live from the store every frame (never via effect deps) so the
+ * rAF loop is created once and never torn down. Colours come from the live CSS
+ * theme vars; reduced-motion draws a single calm frame.
  */
-export function HeroGrid() {
+export function MeshField() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const reducedMotion = useExperience((s) => s.reducedMotion)
   const hyperdrive = useExperience((s) => s.hyperdrive)
-  // Live pointer in client coords; -1 marks "no pointer yet".
   const pointer = useRef({ x: -1, y: -1 })
 
   useEffect(() => {
@@ -61,11 +65,11 @@ export function HeroGrid() {
       getComputedStyle(document.documentElement).getPropertyValue(name)
     let primary: RGB = [77, 141, 255]
     let accent: RGB = [34, 211, 238]
-    let bg = '#05070e'
+    let bg: RGB = [5, 7, 14]
     const readTheme = () => {
       primary = hexToRgb(readVar('--primary'), primary)
       accent = hexToRgb(readVar('--accent'), accent)
-      bg = readVar('--background').trim() || bg
+      bg = hexToRgb(readVar('--background'), bg)
     }
     readTheme()
     const themeObserver = new MutationObserver(readTheme)
@@ -76,42 +80,52 @@ export function HeroGrid() {
 
     // --- Geometry buffers ----------------------------------------------
     const N = COLS * ROWS
-    const sx = new Float32Array(N) // projected screen x
-    const sy = new Float32Array(N) // projected screen y
-    const dep = new Float32Array(N) // perspective scale (depth cue)
-    const lift = new Float32Array(N) // 0..1 cursor influence
-
-    const pitch = 0.92 // plane tilt toward the camera
-    const cosP = Math.cos(pitch)
-    const sinP = Math.sin(pitch)
+    const sx = new Float32Array(N)
+    const sy = new Float32Array(N)
+    const dep = new Float32Array(N)
+    const lift = new Float32Array(N)
 
     let raf = 0
     let startTs = -1
+    let camScroll = useExperience.getState().scrollProgress // eased scroll camera
 
     const frame = (ts: number) => {
       if (startTs < 0) startTs = ts
       const time = (ts - startTs) / 1000
-      const t = reducedMotion ? 0.8 : time * (hyperdrive ? 1.7 : 1)
+
+      // Live, eased scroll value drives the camera.
+      const targetScroll = useExperience.getState().scrollProgress
+      camScroll += (targetScroll - camScroll) * (reducedMotion ? 1 : 0.06)
+      const scroll = camScroll
+
+      const t = reducedMotion ? 0.8 : time * (hyperdrive ? 1.7 : 1) + scroll * 9
+
+      // --- Scroll-driven camera --------------------------------------
+      const pitch = 0.7 + scroll * 0.55 // tilt further onto the plane while descending
+      const cosP = Math.cos(pitch)
+      const sinP = Math.sin(pitch)
+      const yaw = (scroll - 0.5) * 0.5 // gentle rotation around vertical
+      const cosY = Math.cos(yaw)
+      const sinY = Math.sin(yaw)
 
       const cx = w / 2
-      const cy = h * 0.46
+      const cy = h * (0.4 + scroll * 0.17) // horizon drifts down as you scroll
       const span = Math.max(w, h)
-      const spanX = span * 1.5
-      const spanZ = span * 1.0
+      const spanX = span * 1.6
+      const spanZ = span * 1.05
       const focal = h * 1.05
       const camDist = span * 0.85
       const amp = span * (hyperdrive ? 0.085 : 0.05)
 
-      // Background wash + soft radial glow for depth.
-      ctx.fillStyle = bg
-      ctx.fillRect(0, 0, w, h)
+      // Transparent: clear so the themed page background shows through, then a
+      // soft primary glow + the mesh on top, so it blends with every section.
+      ctx.clearRect(0, 0, w, h)
       const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, span * 0.7)
-      glow.addColorStop(0, rgba(primary, 0.1))
+      glow.addColorStop(0, rgba(primary, 0.08))
       glow.addColorStop(1, rgba(primary, 0))
       ctx.fillStyle = glow
       ctx.fillRect(0, 0, w, h)
 
-      // Pointer in canvas-local space.
       const rect = canvas.getBoundingClientRect()
       const pxRaw = pointer.current.x
       const px = pxRaw < 0 ? -9999 : pointer.current.x - rect.left
@@ -124,22 +138,25 @@ export function HeroGrid() {
           const idx = j * COLS + i
           const u = i / (COLS - 1) - 0.5
           const v = j / (ROWS - 1) - 0.5
-          const lx = u * spanX
-          const lz = v * spanZ
+          let lx = u * spanX
+          let lz = v * spanZ
+          // Yaw around the vertical axis.
+          const rx = lx * cosY - lz * sinY
+          lz = lx * sinY + lz * cosY
+          lx = rx
+
           const ly =
             amp *
             (Math.sin(u * 6.5 + t * 1.1) * 0.6 +
               Math.cos(v * 5.0 - t * 0.9) * 0.6 +
               Math.sin((u + v) * 4.0 + t * 0.6) * 0.4)
 
-          // Rotate around X, then perspective-project.
           const yR = ly * cosP - lz * sinP
           const zR = ly * sinP + lz * cosP
           const scale = focal / (zR + camDist)
           let screenX = cx + lx * scale
           let screenY = cy - yR * scale
 
-          // Cursor lift (screen-space gaussian).
           let l = 0
           if (px > -9000 && !reducedMotion) {
             const dx = screenX - px
@@ -155,15 +172,15 @@ export function HeroGrid() {
         }
       }
 
-      // --- Lines (the star): connect right + down neighbours ----------
+      // --- Lines: connect right + down neighbours ---------------------
       ctx.lineWidth = 1
       const depMin = focal / (spanZ * 0.5 + camDist)
       const depMax = focal / (-spanZ * 0.5 + camDist)
       const stroke = (a: number, b: number) => {
         const ld = Math.max(lift[a], lift[b])
         const d = (dep[a] + dep[b]) * 0.5
-        const dn = (d - depMin) / (depMax - depMin) // 0 far → 1 near
-        const alpha = Math.min(0.85, 0.06 + dn * 0.32 + ld * 0.6)
+        const dn = (d - depMin) / (depMax - depMin)
+        const alpha = Math.min(0.8, 0.05 + dn * 0.3 + ld * 0.6)
         ctx.strokeStyle = rgba(lerp(primary, accent, Math.min(1, ld * 1.3)), alpha)
         ctx.beginPath()
         ctx.moveTo(sx[a], sy[a])
@@ -178,22 +195,22 @@ export function HeroGrid() {
         }
       }
 
-      // --- Vertices: subtle glowing nodes -----------------------------
+      // --- Vertices ---------------------------------------------------
       for (let idx = 0; idx < N; idx++) {
         const dn = (dep[idx] - depMin) / (depMax - depMin)
         const l = lift[idx]
-        const r = (0.8 + dn * 1.6) * (1 + l * 2.2)
+        const r = (0.7 + dn * 1.5) * (1 + l * 2.2)
         const col = lerp(primary, accent, Math.min(1, l * 1.4))
-        ctx.fillStyle = rgba(col, Math.min(0.95, 0.18 + dn * 0.4 + l * 0.6))
+        ctx.fillStyle = rgba(col, Math.min(0.95, 0.15 + dn * 0.38 + l * 0.6))
         ctx.beginPath()
         ctx.arc(sx[idx], sy[idx], r, 0, Math.PI * 2)
         ctx.fill()
       }
 
-      // Vignette: fade the mesh into the page edges.
-      const vig = ctx.createRadialGradient(cx, h * 0.5, h * 0.2, cx, h * 0.5, span * 0.75)
-      vig.addColorStop(0, rgba(hexToRgb(bg, [5, 7, 14]), 0))
-      vig.addColorStop(1, bg)
+      // Vignette: fade the mesh into the page edges with the theme bg.
+      const vig = ctx.createRadialGradient(cx, h * 0.5, h * 0.25, cx, h * 0.5, span * 0.8)
+      vig.addColorStop(0, rgba(bg, 0))
+      vig.addColorStop(1, rgba(bg, 0.85))
       ctx.fillStyle = vig
       ctx.fillRect(0, 0, w, h)
 
@@ -209,7 +226,6 @@ export function HeroGrid() {
     }
   }, [reducedMotion, hyperdrive])
 
-  // Track the pointer globally so the lift follows the cursor across the hero.
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
       pointer.current = { x: e.clientX, y: e.clientY }
@@ -229,7 +245,7 @@ export function HeroGrid() {
     <canvas
       ref={canvasRef}
       aria-hidden
-      className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+      className="pointer-events-none fixed inset-0 z-0 h-screen w-screen"
     />
   )
 }
