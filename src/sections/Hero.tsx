@@ -47,7 +47,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/70" />
               <span className="relative inline-flex size-2 rounded-full bg-accent" />
             </span>
-            Open to internships & collaborations
+            Research Officer Intern · Video Analytics Lab, PNEC NUST
           </Badge>
         </motion.div>
 
@@ -78,9 +78,10 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
         >
-          I'm a Computer Engineering student at NUST building a strong
-          foundation in machine learning, Python, and digital systems — from an
-          8-bit CPU in Verilog to database-driven software.
+          I'm a Computer Engineering student at NUST and a Research Officer
+          Intern at PNEC's Video Analytics Lab, building a foundation in machine
+          learning, Python, and digital systems — from an 8-bit CPU in Verilog
+          to database-driven software.
         </motion.p>
 
         <motion.div
