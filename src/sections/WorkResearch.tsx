@@ -4,7 +4,7 @@ import { SectionHeading } from '@/components/ui/section-heading'
 import { GlassPanel } from '@/components/ui/glass-panel'
 import { Badge } from '@/components/ui/badge'
 import { Reveal } from '@/components/motion/Reveal'
-import { Tabs } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { experience } from '@/data/experience'
 import { research, type Publication } from '@/data/research'
 
@@ -35,18 +35,18 @@ export function WorkResearch() {
 
       <div className="mt-14">
         <Tabs defaultValue="experience">
-          <Tabs.List className="grid w-full grid-cols-2">
-            <Tabs.Trigger value="experience" className="gap-2">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="experience" className="gap-2">
               <Briefcase className="size-4" />
               Experience
-            </Tabs.Trigger>
-            <Tabs.Trigger value="research" className="gap-2">
+            </TabsTrigger>
+            <TabsTrigger value="research" className="gap-2">
               <Sparkles className="size-4" />
               Research
-            </Tabs.Trigger>
-          </Tabs.List>
+            </TabsTrigger>
+          </TabsList>
 
-          <Tabs.Content value="experience" className="mt-8">
+          <TabsContent value="experience" className="mt-8">
             <div className="relative pl-8 md:pl-10">
               {/* Timeline track */}
               <div className="absolute left-[7px] top-2 h-full w-px bg-gradient-to-b from-primary via-accent to-transparent md:left-[11px]" />
@@ -98,9 +98,9 @@ export function WorkResearch() {
                 ))}
               </div>
             </div>
-          </Tabs.Content>
+          </TabsContent>
 
-          <Tabs.Content value="research" className="mt-8">
+          <TabsContent value="research" className="mt-8">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {research.map((pub, i) => (
                 <Reveal key={pub.id} from="up" delay={i} className="h-full">
@@ -146,7 +146,7 @@ export function WorkResearch() {
                 </Reveal>
               ))}
             </div>
-          </Tabs.Content>
+          </TabsContent>
         </Tabs>
       </div>
     </Section>

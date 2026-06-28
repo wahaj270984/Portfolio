@@ -2,6 +2,7 @@ import { BadgeCheck } from 'lucide-react'
 import { Section } from '@/components/layout/Section'
 import { SectionHeading } from '@/components/ui/section-heading'
 import { GlassPanel } from '@/components/ui/glass-panel'
+import { TiltCard } from '@/components/ui/tilt-card'
 import { Reveal } from '@/components/motion/Reveal'
 import { certifications, type Certification } from '@/data/certifications'
 import { cn } from '@/lib/utils'
@@ -25,6 +26,7 @@ export function Certifications() {
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {certifications.map((cert, i) => (
           <Reveal key={cert.id} from="up" delay={i} className="h-full">
+            <TiltCard className="h-full" max={7}>
             <GlassPanel
               tone="strong"
               pad="lg"
@@ -49,6 +51,7 @@ export function Certifications() {
                 ID · {cert.credentialId}
               </p>
             </GlassPanel>
+            </TiltCard>
           </Reveal>
         ))}
       </div>

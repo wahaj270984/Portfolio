@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { ArrowDown, ArrowRight, Sparkles } from 'lucide-react'
 import { FaGithub, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6'
 import { Section } from '@/components/layout/Section'
+import { HeroGrid } from '@/components/background/HeroGrid'
 import { Container } from '@/components/ui/container'
 import { Badge } from '@/components/ui/badge'
 import { MagneticButton } from '@/components/ui/magnetic-button'
@@ -36,6 +37,7 @@ const socials = [
 export function Hero() {
   return (
     <Section id="hero" full bare aria-label="Introduction">
+      <HeroGrid />
       <Container className="relative z-10">
       <div className="flex flex-col items-start gap-7">
         <motion.div

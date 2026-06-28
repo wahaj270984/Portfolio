@@ -1,6 +1,7 @@
 import { Section } from '@/components/layout/Section'
 import { SectionHeading } from '@/components/ui/section-heading'
 import { GlassPanel } from '@/components/ui/glass-panel'
+import { TiltCard } from '@/components/ui/tilt-card'
 import { Badge } from '@/components/ui/badge'
 import { Reveal } from '@/components/motion/Reveal'
 import { useCountUp } from '@/hooks'
@@ -9,19 +10,21 @@ import { profile, type Stat } from '@/data/profile'
 function StatCard({ stat, index }: { stat: Stat; index: number }) {
   const { value, ref } = useCountUp(stat.value)
   return (
-    <Reveal from="up" delay={index}>
-      <GlassPanel pad="md" className="h-full text-center">
-        <div className="font-heading text-3xl font-bold text-gradient md:text-4xl">
-          <span ref={ref}>
-            {stat.prefix}
-            {value}
-            {stat.suffix}
-          </span>
-        </div>
-        <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
-          {stat.label}
-        </div>
-      </GlassPanel>
+    <Reveal from="up" delay={index} className="h-full">
+      <TiltCard className="group h-full" max={9}>
+        <GlassPanel pad="md" className="h-full text-center">
+          <div className="font-heading text-3xl font-bold text-gradient md:text-4xl">
+            <span ref={ref}>
+              {stat.prefix}
+              {value}
+              {stat.suffix}
+            </span>
+          </div>
+          <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
+            {stat.label}
+          </div>
+        </GlassPanel>
+      </TiltCard>
     </Reveal>
   )
 }

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Section } from '@/components/layout/Section'
 import { SectionHeading } from '@/components/ui/section-heading'
 import { GlassPanel } from '@/components/ui/glass-panel'
+import { TiltCard } from '@/components/ui/tilt-card'
 import { Reveal } from '@/components/motion/Reveal'
 import { useExperience } from '@/store/useExperience'
 import { skillGroups, type Skill, type SkillGroup } from '@/data/skills'
@@ -44,7 +45,8 @@ export function Skills() {
 
       <div className="mt-14 grid gap-6 md:grid-cols-2">
         {skillGroups.map((group, gi) => (
-          <Reveal key={group.id} from={gi % 2 === 0 ? 'left' : 'right'} delay={gi}>
+          <Reveal key={group.id} from={gi % 2 === 0 ? 'left' : 'right'} delay={gi} className="h-full">
+            <TiltCard className="group h-full" max={5}>
             <GlassPanel pad="lg" className="h-full">
               <div className="mb-5 flex items-center gap-2">
                 <span
@@ -63,6 +65,7 @@ export function Skills() {
                 ))}
               </div>
             </GlassPanel>
+            </TiltCard>
           </Reveal>
         ))}
       </div>

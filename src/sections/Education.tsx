@@ -2,6 +2,7 @@ import { GraduationCap } from 'lucide-react'
 import { Section } from '@/components/layout/Section'
 import { SectionHeading } from '@/components/ui/section-heading'
 import { GlassPanel } from '@/components/ui/glass-panel'
+import { TiltCard } from '@/components/ui/tilt-card'
 import { Reveal } from '@/components/motion/Reveal'
 import { education } from '@/data/education'
 
@@ -18,6 +19,7 @@ export function Education() {
       <div className="mt-14 grid gap-6 md:grid-cols-2">
         {education.map((item, i) => (
           <Reveal key={item.id} from={i % 2 === 0 ? 'left' : 'right'} delay={i} className="h-full">
+            <TiltCard className="group h-full" max={6}>
             <GlassPanel pad="lg" className="flex h-full flex-col">
               <div className="flex items-start gap-4">
                 <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary">
@@ -45,6 +47,7 @@ export function Education() {
                 ))}
               </ul>
             </GlassPanel>
+            </TiltCard>
           </Reveal>
         ))}
       </div>
