@@ -12,6 +12,20 @@ export interface ExperienceItem {
 
 export const experience: ExperienceItem[] = [
   {
+    id: 'research-officer-pnec',
+    role: 'Research Officer Intern',
+    org: 'Video Analytics Lab, PNEC NUST — under Muhammad Faisal',
+    period: '2026 — Present',
+    location: 'Karachi, Pakistan',
+    summary:
+      'Research Officer Intern at PNEC NUST’s Video Analytics Lab, working on computer-vision and video-analytics research.',
+    achievements: [
+      'Supporting ongoing video-analytics and computer-vision research at the lab',
+      'Working with video data and modern vision techniques under faculty supervision',
+    ],
+    tags: ['Computer Vision', 'Video Analytics', 'Research'],
+  },
+  {
     id: 'ml-research',
     role: 'Independent Machine Learning Research',
     org: 'NUST — under Dr. Ahmed Naeem',
