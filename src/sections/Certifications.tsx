@@ -3,7 +3,7 @@ import { Section } from '@/components/layout/Section'
 import { SectionHeading } from '@/components/ui/section-heading'
 import { GlassPanel } from '@/components/ui/glass-panel'
 import { TiltCard } from '@/components/ui/tilt-card'
-import { BrandLogo } from '@/components/ui/brand-logo'
+import { BrandLogo, isWordmarkBrand } from '@/components/ui/brand-logo'
 import { Reveal } from '@/components/motion/Reveal'
 import { certifications, type Certification } from '@/data/certifications'
 import { cn } from '@/lib/utils'
@@ -41,15 +41,19 @@ export function Certifications() {
               />
 
               <div className="flex items-start justify-between gap-3">
-                {/* Issuer brand mark, tinted to the card's accent. */}
+                {/* Issuer logo. Icon brands sit in a square chip; universities
+                    show their wordmark in a wider pill. */}
                 <span
                   className={cn(
-                    'grid size-11 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/5 backdrop-blur',
+                    'flex h-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 backdrop-blur',
                     'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]',
-                    DOT[cert.accent],
+                    isWordmarkBrand(cert.logo) ? 'px-3' : 'w-9',
                   )}
                 >
-                  <BrandLogo brand={cert.logo} className="size-6" />
+                  <BrandLogo
+                    brand={cert.logo}
+                    className={isWordmarkBrand(cert.logo) ? 'h-3 w-auto' : 'size-5'}
+                  />
                 </span>
                 <span className="font-mono text-xs text-muted-foreground">{cert.year}</span>
               </div>

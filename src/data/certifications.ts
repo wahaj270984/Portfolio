@@ -28,8 +28,8 @@ export const certifications: Certification[] = [
   {
     id: 'supervised-ml',
     title: 'Supervised Machine Learning: Regression & Classification',
-    issuer: 'DeepLearning.AI',
-    logo: 'deeplearning-ai',
+    issuer: 'Stanford University',
+    logo: 'stanford',
     year: '2025',
     credentialUrl:
       'https://www.coursera.org/account/accomplishments/verify/XNYFL3LOGVM7',
@@ -64,5 +64,15 @@ export const certifications: Certification[] = [
     credentialUrl:
       'https://www.udemy.com/certificate/UC-41a3f17f-4af5-4604-ab64-775a257da6ac/',
     accent: 'accent',
+  },
+  {
+    id: 'math-thinking-cs',
+    title: 'Mathematical Thinking in Computer Science',
+    issuer: 'UC San Diego',
+    logo: 'uc-san-diego',
+    year: '2026',
+    credentialUrl:
+      'https://www.coursera.org/account/accomplishments/verify/9MTIDCJKA303',
+    accent: 'violet',
   },
 ]

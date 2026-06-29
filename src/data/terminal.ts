@@ -162,7 +162,7 @@ export const commands: Record<string, Command> = {
     description: 'Elevate privileges',
     hidden: true,
     run: () => ({
-      lines: [out("You already have root in my universe ⚡"), out('')],
+      lines: [out("You already have root in my universe "), out('')],
       effect: 'sudo',
     }),
   },
