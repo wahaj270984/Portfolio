@@ -85,10 +85,9 @@ export function WordsReveal({ text, className, wordClassName }: WordsRevealProps
       {words.map((word, i) => (
         <span
           key={`${word}-${i}`}
-          // pb/-mb give descenders (j, g, y) room inside the reveal clip box
-          // without changing the tight headline line-height. The pad must clear
-          // the font's full descender depth (Space Grotesk's j is deep).
-          className="inline-block overflow-hidden align-bottom pb-[0.4em] -mb-[0.4em]"
+          // No overflow clip: the words fade-rise a small amount (see the
+          // reveal-up keyframe), so descenders are never cut at any width.
+          className="inline-block align-bottom"
         >
           <span
             className={cn('inline-block', wordClassName)}

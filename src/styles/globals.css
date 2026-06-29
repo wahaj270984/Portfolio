@@ -247,9 +247,11 @@
   }
 }
 
+/* Gentle fade-rise for the hero words. Small offset (not a full-height slide)
+   so it needs no overflow clip — descenders (j, g, y) never get cut. */
 @keyframes reveal-up {
   from {
-    transform: translateY(110%);
+    transform: translateY(0.5em);
     opacity: 0;
   }
   to {
