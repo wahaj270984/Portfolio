@@ -60,7 +60,7 @@ export function Hero() {
           >
             <Sparkles className="size-4" /> Hi, I'm
           </motion.p>
-          <h1 className="font-heading text-5xl font-bold leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
+          <h1 className="font-heading text-5xl font-bold leading-[1.15] tracking-tight sm:text-7xl lg:text-8xl">
             {/* Gradient must live on the animated word spans, not the wrapper:
                 with the per-word reveal transform, a wrapper-level
                 background-clip:text leaves the glyphs transparent (invisible). */}
