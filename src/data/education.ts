@@ -19,7 +19,6 @@ export const education: EducationItem[] = [
     details:
       'Computer Engineering with a focus on machine learning, programming, and digital systems.',
     highlights: [
-      '3.42 GPA',
       'Coursework: Programming Fundamentals, OOP, Digital Logic Design',
       'Calculus & Linear Algebra',
     ],
@@ -32,6 +31,6 @@ export const education: EducationItem[] = [
     location: 'Karachi, Pakistan',
     details:
       'Pre-Engineering foundation in mathematics, physics, and chemistry.',
-    highlights: ['81% Grade'],
+    highlights: ['Coursework: Mathematics, Physics, Chemistry'],
   },
 ]

@@ -32,6 +32,5 @@ export const profile = {
     { label: 'Academic Projects', value: 3 },
     { label: 'Certifications', value: 5 },
     { label: 'Core Languages', value: 3 },
-    { label: 'FSc Grade', value: 81, suffix: '%' },
   ] satisfies Stat[],
 } as const

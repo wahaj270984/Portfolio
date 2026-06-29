@@ -3,6 +3,7 @@ import { Section } from '@/components/layout/Section'
 import { SectionHeading } from '@/components/ui/section-heading'
 import { GlassPanel } from '@/components/ui/glass-panel'
 import { TiltCard } from '@/components/ui/tilt-card'
+import { BrandLogo } from '@/components/ui/brand-logo'
 import { Reveal } from '@/components/motion/Reveal'
 import { certifications, type Certification } from '@/data/certifications'
 import { cn } from '@/lib/utils'
@@ -40,13 +41,25 @@ export function Certifications() {
               />
 
               <div className="flex items-start justify-between gap-3">
-                <BadgeCheck className={cn('size-7', DOT[cert.accent])} />
+                {/* Issuer brand mark, tinted to the card's accent. */}
+                <span
+                  className={cn(
+                    'grid size-11 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/5 backdrop-blur',
+                    'shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]',
+                    DOT[cert.accent],
+                  )}
+                >
+                  <BrandLogo brand={cert.logo} className="size-6" />
+                </span>
                 <span className="font-mono text-xs text-muted-foreground">{cert.year}</span>
               </div>
               <h3 className="mt-4 font-heading text-base font-semibold leading-snug">
                 {cert.title}
               </h3>
-              <p className="mt-1 text-sm text-muted-foreground">{cert.issuer}</p>
+              <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+                <BadgeCheck className={cn('size-4', DOT[cert.accent])} />
+                {cert.issuer}
+              </p>
               {cert.credentialUrl && (
                 <a
                   href={cert.credentialUrl}

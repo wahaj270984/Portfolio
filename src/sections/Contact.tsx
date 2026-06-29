@@ -41,11 +41,15 @@ function Terminal() {
   const idRef = useRef(BANNER.length)
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const timersRef = useRef<number[]>([])
 
   useEffect(() => {
     const el = scrollRef.current
     if (el) el.scrollTop = el.scrollHeight
   }, [lines])
+
+  // Cancel any pending delayed-output timers if the terminal unmounts mid-sequence.
+  useEffect(() => () => timersRef.current.forEach(clearTimeout), [])
 
   const push = (newLines: TerminalLine[]) => {
     setLines((prev) => [
@@ -70,6 +74,13 @@ function Terminal() {
       idRef.current = 0
     } else {
       push(result.lines)
+    }
+
+    if (result.delayed) {
+      for (const step of result.delayed) {
+        const t = window.setTimeout(() => push(step.lines), step.after)
+        timersRef.current.push(t)
+      }
     }
 
     if (result.open) window.open(result.open, '_blank', 'noopener,noreferrer')

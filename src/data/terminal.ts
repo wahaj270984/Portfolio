@@ -25,6 +25,8 @@ export interface CommandResult {
   open?: string
   /** Named easter-egg signal handled by the component. */
   effect?: 'matrix' | 'theme' | 'sudo'
+  /** Lines printed later, each `after` ms from submit — fakes a loading sequence. */
+  delayed?: { after: number; lines: TerminalLine[] }[]
 }
 
 export interface Command {
@@ -38,6 +40,28 @@ const out = (text: string): TerminalLine => ({ kind: 'output', text })
 const sys = (text: string): TerminalLine => ({ kind: 'system', text })
 const accent = (text: string): TerminalLine => ({ kind: 'accent', text })
 const link = (text: string, href: string): TerminalLine => ({ kind: 'link', text, href })
+
+/**
+ * Rage-bait easter egg. A friend types a "leaked account" keyword and the
+ * terminal fakes a login with a progress bar that ends at "unlocked" — with NO
+ * credentials behind it. Hidden from `help` so it stays a hunt your friends
+ * have to stumble into.
+ */
+function bait(service: string): Command {
+  return {
+    name: service.toLowerCase().replace(/\s+/g, ''),
+    description: `${service} account`,
+    hidden: true,
+    run: () => ({
+      lines: [accent('Access granted ✅'), sys(`Logging you into ${service}…`)],
+      delayed: [
+        { after: 500, lines: [out('  [███░░░░░░░]  30%  fetching credentials…')] },
+        { after: 1100, lines: [out('  [███████░░░]  70%  decrypting vault…')] },
+        { after: 1700, lines: [out('  [██████████] 100%  unlocked.')] },
+      ],
+    }),
+  }
+}
 
 export const commands: Record<string, Command> = {
   help: {
@@ -138,7 +162,7 @@ export const commands: Record<string, Command> = {
     description: 'Elevate privileges',
     hidden: true,
     run: () => ({
-      lines: [out("Nice try. You already have root in my universe ⚡"), out('')],
+      lines: [out("You already have root in my universe ⚡"), out('')],
       effect: 'sudo',
     }),
   },
@@ -160,6 +184,13 @@ export const commands: Record<string, Command> = {
     hidden: true,
     run: () => ({ lines: [out('☕ Brewing… HTTP 418: I’m a teapot.')] }),
   },
+  // ---- hidden rage-bait: fake "leaked account" logins ----
+  viki: bait('Viki'),
+  masterclass: bait('MasterClass'),
+  avira: bait('Avira'),
+  pandora: bait('Pandora'),
+  beautiful: bait('Beautiful'),
+  curiosity: bait('CuriosityStream'),
 }
 
 /** Run a raw input line against the registry. */
@@ -184,6 +215,6 @@ export function runCommand(input: string): { echo: string; result: CommandResult
 }
 
 export const BANNER: TerminalLine[] = [
-  accent('  Wahaj OS  ·  v1.0  '),
+  accent('  Wahaj OS  ·  v1.1  '),
   sys("Interactive console. Type `help` to begin."),
 ]
